@@ -15,6 +15,7 @@ class get_text_msg(threading.Thread):
         self.xb = xiaobing_name
 
     def run(self):
+        autoreply = False
         while True:
             try:
                 # 获取信息
@@ -24,20 +25,25 @@ class get_text_msg(threading.Thread):
                     for msg in msgs[0]:
                         time.sleep(0.2)
                         try:
-                            # 检测信息的发件人， 这里过滤掉自己和群信息，只接受文本信息
-                            if msg['MsgType'] == 1 and msg['FromUserName'] != wc.originInstance.storageClass.userName and '@@' not in msg['FromUserName']:
-                                # 获取不是小冰的信息
-                                if msg['FromUserName'] != self.xb:
-                                    # print('%s: %s: %s - %s' % (
-                                    # time.ctime(time.time()), msg['MsgId'], msg['Content'], msg['FromUserName']))
-                                    # 添加到列表
-                                    self.mi.append(copy.deepcopy(msg))
-                                # 小冰的信息
-                                else:
-                                    # print('%s: %s: %s - %s' % (
-                                    # time.ctime(time.time()), msg['MsgId'], msg['Content'], msg['FromUserName']))
-                                    # 添加到回复列表
-                                    self.mo.append(copy.deepcopy(msg))
+                            # 找到自己的发言，‘开始你的表演’，‘停止你的表演’ 作为开始和结束的指令
+                            if msg['Msgtype'] == 1:
+                                if msg['FromUserName'] == wc.originInstance.storageClass.userName:
+                                    if '开始你的表演' in msg['Content']:
+                                        autoreply = True
+                                        print('表演开始咯')
+                                    if '停止你的表演' in msg['Content']:
+                                        autoreply = False
+                                        print('表演谢幕了')
+                                elif '@@' not in msg['FromUserName'] and '@' in msg['FromUserName'] :
+                                    # 获取不是小冰的信息
+                                    if autoreply:
+                                        if msg['FromUserName'] != self.xb:
+                                            # 添加到接收列表
+                                            self.mi.append(copy.deepcopy(msg))
+                                        # 小冰的信息
+                                        else:
+                                            # 添加到回复列表
+                                            self.mo.append(copy.deepcopy(msg))
                         except IndexError:
                             pass
             except:
