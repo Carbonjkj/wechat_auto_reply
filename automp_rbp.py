@@ -66,8 +66,10 @@ class reply_msg(threading.Thread):
                 if len(self.mi) != 0:
                     msg = copy.deepcopy(self.mi[0])
                     self.mi.pop(0)
-                    print('%s: %s: %s - %s' % (
-                        time.ctime(time.time()), msg['MsgId'], msg['Content'], msg['FromUserName']))
+                    user = wc.search_friends(msg['FromUserName'])
+
+                    print('[%s] %s - %s' % (
+                        time.ctime(time.time()), msg['Content'], user['NickName']))
                     wc.send_msg(msg['Content'], self.xb)
                     del self.mo[:]
                     timeout = time.time()
@@ -81,8 +83,8 @@ class reply_msg(threading.Thread):
                     if replied == False:
                         last_reply = copy.deepcopy(self.mo[-1])
                         wc.send_msg('(自动)%s' % last_reply['Content'], msg['FromUserName'])
-                        print('%s: %s: %s - %s' % (
-                            time.ctime(time.time()), last_reply['MsgId'], last_reply['Content'], last_reply['FromUserName']))
+                        print('[%s] %s - 小冰' % (
+                            time.ctime(time.time()), last_reply['Content']))
                 else:
                     time.sleep(0.2)
             except:
