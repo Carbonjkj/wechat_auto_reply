@@ -93,11 +93,16 @@ def find_xiaobing():
     time_out = time.time()
     xiaobing_name = ''
     while True:
-        logging.INFO(wc.search_mps(name=('小冰').decode()))
-        xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
-        logging.INFO('小冰找到啦！')
-        if xiaobing_name != '':
+        try:
+            logging.DEBUG(wc.search_mps(name='小冰'))
+            xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
+            logging.INFO('小冰找到啦！')
             break
+        except:
+            if time.time() - time_out > 15:
+                logging.WARNING('小冰不见啦！20秒后重试')
+                time.sleep(20)
+            pass
     return xiaobing_name
 
 if __name__ == '__main__':
