@@ -26,7 +26,10 @@ class get_text_msg(threading.Thread):
                         time.sleep(0.2)
                         try:
                             # 检测信息的发件人， 这里过滤掉自己和群信息，只接受文本信息
-                            if msg['MsgType'] == 1 and msg['FromUserName'] != wc.originInstance.storageClass.userName and '@@' not in msg['FromUserName']:
+                            if msg['MsgType'] == 1 \
+                                    and msg['FromUserName'] != wc.originInstance.storageClass.userName \
+                                    and '@@' not in msg['FromUserName'] \
+                                    and '@' in msg['FromUserName']:
                                 # 获取不是小冰的信息
                                 if msg['FromUserName'] != self.xb:
                                     # print('%s: %s: %s - %s' % (
