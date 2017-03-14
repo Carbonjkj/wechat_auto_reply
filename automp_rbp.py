@@ -66,8 +66,7 @@ class reply_msg(threading.Thread):
                 if len(self.mi) != 0:
                     msg = copy.deepcopy(self.mi[0])
                     self.mi.pop(0)
-                    user = wc.search_friends(msg['FromUserName'])
-
+                    user = wc.search_friends(userName=msg['FromUserName'])
                     print('[%s] %s - %s' % (
                         time.ctime(time.time()), msg['Content'], user['NickName']))
                     wc.send_msg(msg['Content'], self.xb)
@@ -77,12 +76,12 @@ class reply_msg(threading.Thread):
                     while len(self.mo) == 0:
                         time.sleep(1)
                         if time.time() - timeout > 10:
-                            wc.send_msg('(自动)一声叹息，我没get到你的point啊~', msg['FromUserName'])
+                            wc.send_msg('一声叹息，我没get到你的point啊~', msg['FromUserName'])
                             replied = True
                             break
                     if replied == False:
                         last_reply = copy.deepcopy(self.mo[-1])
-                        wc.send_msg('(自动)%s' % last_reply['Content'], msg['FromUserName'])
+                        wc.send_msg('%s' % last_reply['Content'], msg['FromUserName'])
                         print('[%s] %s - 小冰' % (
                             time.ctime(time.time()), last_reply['Content']))
                 else:
@@ -98,7 +97,9 @@ def find_xiaobing():
     xiaobing_name = ''
     while True:
         try:
+            print(wc.search_mps(name='小冰')[0])
             xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
+
             print('小冰找到啦！')
             break
         except:
@@ -111,7 +112,7 @@ def find_xiaobing():
 if __name__ == '__main__':
     MSGIN = []
     MSGOUT = []
-    wc.auto_login(enableCmdQR=2)
+    wc.auto_login(enableCmdQR=False)
     XB = find_xiaobing()
 
     t1 = get_text_msg(MSGIN, MSGOUT, XB)
