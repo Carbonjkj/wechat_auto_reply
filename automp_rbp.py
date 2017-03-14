@@ -1,7 +1,7 @@
 #! python2
 # coding: utf-8
 import itchat as wc
-import requests
+import logging
 import copy
 import time
 import threading
@@ -45,7 +45,7 @@ class get_text_msg(threading.Thread):
                         except IndexError:
                             pass
             except:
-                print('Getting module face a problem')
+                logging.WARNING('Getting module face a problem')
                 pass
 
 
@@ -64,7 +64,7 @@ class reply_msg(threading.Thread):
                 if len(self.mi) != 0:
                     msg = copy.deepcopy(self.mi[0])
                     self.mi.pop(0)
-                    print('%s: %s: %s - %s' % (
+                    logging.INFO('%s: %s: %s - %s' % (
                         time.ctime(time.time()), msg['MsgId'], msg['Content'], msg['FromUserName']))
                     wc.send_msg(msg['Content'], self.xb)
                     del self.mo[:]
@@ -79,13 +79,13 @@ class reply_msg(threading.Thread):
                     if replied == False:
                         last_reply = copy.deepcopy(self.mo[-1])
                         wc.send_msg('(自动)%s' % last_reply['Content'], msg['FromUserName'])
-                        print('%s: %s: %s - %s' % (
+                        logging.INFO('%s: %s: %s - %s' % (
                             time.ctime(time.time()), last_reply['MsgId'], last_reply['Content'], last_reply['FromUserName']))
                 else:
                     time.sleep(0.2)
             except:
                 time.sleep(0.2)
-                print('reply module face a problem')
+                logging.WARNING('reply module face a problem')
                 pass
 
 
@@ -93,16 +93,11 @@ def find_xiaobing():
     time_out = time.time()
     xiaobing_name = ''
     while True:
-        try:
-            print(wc.search_mps(name='小冰'))
-            xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
-            print('小冰找到啦！')
+        logging.INFO(wc.search_mps(name='小冰'))
+        xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
+        logging.INFO('小冰找到啦！')
+        if xiaobing_name != '':
             break
-        except:
-            if time.time() - time_out > 15:
-                print('小冰不见啦！20秒后重试')
-                time.sleep(20)
-            pass
     return xiaobing_name
 
 if __name__ == '__main__':
@@ -112,7 +107,6 @@ if __name__ == '__main__':
     XB = find_xiaobing()
     t1 = get_text_msg(MSGIN, MSGOUT, XB)
     t1.start()
-
     t3 = reply_msg(MSGIN, MSGOUT, XB)
     t3.start()
     wc.start_receiving()
