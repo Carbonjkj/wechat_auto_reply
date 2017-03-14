@@ -1,7 +1,6 @@
 #! python2
 # coding: utf-8
 import itchat as wc
-import logging
 import copy
 import time
 import threading
@@ -42,7 +41,7 @@ class get_text_msg(threading.Thread):
                         except IndexError:
                             pass
             except:
-                logging.WARNING('Getting module face a problem')
+                print('Getting module face a problem')
                 pass
 
 
@@ -61,7 +60,7 @@ class reply_msg(threading.Thread):
                 if len(self.mi) != 0:
                     msg = copy.deepcopy(self.mi[0])
                     self.mi.pop(0)
-                    logging.INFO('%s: %s: %s - %s' % (
+                    print('%s: %s: %s - %s' % (
                         time.ctime(time.time()), msg['MsgId'], msg['Content'], msg['FromUserName']))
                     wc.send_msg(msg['Content'], self.xb)
                     del self.mo[:]
@@ -76,13 +75,13 @@ class reply_msg(threading.Thread):
                     if replied == False:
                         last_reply = copy.deepcopy(self.mo[-1])
                         wc.send_msg('(自动)%s' % last_reply['Content'], msg['FromUserName'])
-                        logging.INFO('%s: %s: %s - %s' % (
+                        print('%s: %s: %s - %s' % (
                             time.ctime(time.time()), last_reply['MsgId'], last_reply['Content'], last_reply['FromUserName']))
                 else:
                     time.sleep(0.2)
             except:
                 time.sleep(0.2)
-                logging.WARNING('reply module face a problem')
+                print('reply module face a problem')
                 pass
 
 
@@ -92,11 +91,11 @@ def find_xiaobing():
     while True:
         try:
             xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
-            logging.INFO('小冰找到啦！')
+            print('小冰找到啦！')
             break
         except:
             if time.time() - time_out > 15:
-                logging.WARNING('小冰不见啦！20秒后重试')
+                print('小冰不见啦！20秒后重试')
                 time.sleep(20)
             pass
     return xiaobing_name

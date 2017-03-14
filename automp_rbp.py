@@ -1,7 +1,6 @@
 #! python2
 # coding: utf-8
 import itchat as wc
-import logging
 import copy
 import time
 import threading
@@ -26,10 +25,7 @@ class get_text_msg(threading.Thread):
                         time.sleep(0.2)
                         try:
                             # 检测信息的发件人， 这里过滤掉自己和群信息，只接受文本信息
-                            if msg['MsgType'] == 1 \
-                                    and msg['FromUserName'] != wc.originInstance.storageClass.userName \
-                                    and '@@' not in msg['FromUserName'] \
-                                    and '@' in msg['FromUserName']:
+                            if msg['MsgType'] == 1 and msg['FromUserName'] != wc.originInstance.storageClass.userName and '@@' not in msg['FromUserName']:
                                 # 获取不是小冰的信息
                                 if msg['FromUserName'] != self.xb:
                                     # print('%s: %s: %s - %s' % (
@@ -45,7 +41,7 @@ class get_text_msg(threading.Thread):
                         except IndexError:
                             pass
             except:
-                logging.WARNING('Getting module face a problem')
+                print('Getting module face a problem')
                 pass
 
 
@@ -64,7 +60,7 @@ class reply_msg(threading.Thread):
                 if len(self.mi) != 0:
                     msg = copy.deepcopy(self.mi[0])
                     self.mi.pop(0)
-                    logging.INFO('%s: %s: %s - %s' % (
+                    print('%s: %s: %s - %s' % (
                         time.ctime(time.time()), msg['MsgId'], msg['Content'], msg['FromUserName']))
                     wc.send_msg(msg['Content'], self.xb)
                     del self.mo[:]
@@ -79,13 +75,13 @@ class reply_msg(threading.Thread):
                     if replied == False:
                         last_reply = copy.deepcopy(self.mo[-1])
                         wc.send_msg('(自动)%s' % last_reply['Content'], msg['FromUserName'])
-                        logging.INFO('%s: %s: %s - %s' % (
+                        print('%s: %s: %s - %s' % (
                             time.ctime(time.time()), last_reply['MsgId'], last_reply['Content'], last_reply['FromUserName']))
                 else:
                     time.sleep(0.2)
             except:
                 time.sleep(0.2)
-                logging.WARNING('reply module face a problem')
+                print('reply module face a problem')
                 pass
 
 
@@ -95,11 +91,11 @@ def find_xiaobing():
     while True:
         try:
             xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
-            logging.INFO('小冰找到啦！')
+            print('小冰找到啦！')
             break
         except:
             if time.time() - time_out > 15:
-                logging.WARNING('小冰不见啦！20秒后重试')
+                print('小冰不见啦！20秒后重试')
                 time.sleep(20)
             pass
     return xiaobing_name
@@ -109,8 +105,10 @@ if __name__ == '__main__':
     MSGOUT = []
     wc.auto_login(enableCmdQR=2)
     XB = find_xiaobing()
+
     t1 = get_text_msg(MSGIN, MSGOUT, XB)
     t1.start()
+
     t3 = reply_msg(MSGIN, MSGOUT, XB)
     t3.start()
     wc.start_receiving()
