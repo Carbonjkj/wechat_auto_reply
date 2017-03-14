@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e63a1cab-dde0-487b-a528-39682772bceb" name="Default" comment="Carbon">
+    <list default="true" id="e63a1cab-dde0-487b-a528-39682772bceb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/automp_rbp.py" afterPath="$PROJECT_DIR$/automp_rbp.py" />
     </list>
@@ -38,8 +38,8 @@
       <file leaf-file-name="automp_rbp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/automp_rbp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
+            <state relative-caret-position="269">
+              <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="120" selection-end-column="4" />
               <folding>
                 <element signature="e#27#46#0" expanded="true" />
               </folding>
@@ -556,7 +556,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489520529626</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Carbon">
+      <created>1489521565035</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1489521565036</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -720,8 +727,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/automp_rbp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
+        <state relative-caret-position="269">
+          <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="120" selection-end-column="4" />
           <folding>
             <element signature="e#27#46#0" expanded="true" />
           </folding>

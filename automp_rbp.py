@@ -113,6 +113,12 @@ if __name__ == '__main__':
     MSGIN = []
     MSGOUT = []
     logging.basicConfig(filename='autoreply.log', level=logging.INFO)
+    console = logging.StreamHandler()
+    console.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    console.setFormatter(formatter)
+    logging.getLogger('').addHandler(console)
+
     wc.auto_login(enableCmdQR=2)
     XB = find_xiaobing()
     logging.info('开始自动回复，请在随意对话框输入，开始你的表演')
