@@ -1,4 +1,3 @@
-
 #! python2
 # coding: utf-8
 import itchat as wc
@@ -79,10 +78,8 @@ class reply_msg(threading.Thread):
                         wc.send_msg('(自动)%s' % last_reply['Content'], msg['FromUserName'])
                         print('%s: %s: %s - %s' % (
                             time.ctime(time.time()), last_reply['MsgId'], last_reply['Content'], last_reply['FromUserName']))
-                    print(time.time()-timeout)
                 else:
                     time.sleep(0.2)
-
             except:
                 time.sleep(0.2)
                 print('reply module face a problem')
