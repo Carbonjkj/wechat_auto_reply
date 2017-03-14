@@ -107,7 +107,7 @@ def find_xiaobing():
 if __name__ == '__main__':
     MSGIN = []
     MSGOUT = []
-    wc.auto_login(enableCmdQR=True)
+    wc.auto_login(enableCmdQR=2)
     XB = find_xiaobing()
 
     t1 = get_text_msg(MSGIN, MSGOUT, XB)
