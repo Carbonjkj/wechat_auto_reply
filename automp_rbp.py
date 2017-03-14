@@ -31,9 +31,11 @@ class get_text_msg(threading.Thread):
                                     if '开始你的表演' in msg['Content']:
                                         autoreply = True
                                         print('表演开始咯')
+                                        wc.send_msg('表演开始', self.xb)
                                     if '停止你的表演' in msg['Content']:
                                         autoreply = False
                                         print('表演谢幕了')
+                                        wc.send_msg('表演谢幕', self.xb)
                                 elif '@@' not in msg['FromUserName'] and '@' in msg['FromUserName'] :
                                     # 获取不是小冰的信息
                                     if autoreply:
