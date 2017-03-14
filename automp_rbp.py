@@ -26,7 +26,7 @@ class get_text_msg(threading.Thread):
                         time.sleep(0.2)
                         try:
                             # 找到自己的发言，‘开始你的表演’，‘停止你的表演’ 作为开始和结束的指令
-                            if msg['Msgtype'] == 1:
+                            if msg['MsgType'] == 1:
                                 if msg['FromUserName'] == wc.originInstance.storageClass.userName:
                                     if '开始你的表演' in msg['Content']:
                                         autoreply = True
