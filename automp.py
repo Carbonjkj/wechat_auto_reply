@@ -99,8 +99,8 @@ def find_xiaobing():
             break
         except:
             if time.time() - time_out > 15:
-                print('小冰不见啦！')
-                break
+                print('小冰不见啦！20秒后重试')
+                time.sleep(20)
             pass
     return xiaobing_name
 
