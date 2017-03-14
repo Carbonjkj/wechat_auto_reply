@@ -94,7 +94,6 @@ def find_xiaobing():
     xiaobing_name = ''
     while True:
         try:
-            logging.DEBUG(wc.search_mps(name='小冰'))
             xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
             logging.INFO('小冰找到啦！')
             break
