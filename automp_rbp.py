@@ -97,7 +97,6 @@ def find_xiaobing():
     xiaobing_name = ''
     while True:
         try:
-            print(wc.search_mps(name='小冰')[0])
             xiaobing_name = wc.search_mps(name='小冰')[0]['UserName']
 
             print('小冰找到啦！')
@@ -112,7 +111,7 @@ def find_xiaobing():
 if __name__ == '__main__':
     MSGIN = []
     MSGOUT = []
-    wc.auto_login(enableCmdQR=False)
+    wc.auto_login(enableCmdQR=2)
     XB = find_xiaobing()
 
     t1 = get_text_msg(MSGIN, MSGOUT, XB)
